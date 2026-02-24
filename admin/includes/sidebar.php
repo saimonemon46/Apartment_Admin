@@ -36,14 +36,14 @@
 
 				<ul class="nav nav-list">
 					<li class="">
-						<a href="index.html">
+						<a href="dashboard.php">
 							<i class="menu-icon fa fa-tachometer"></i>
 							<span class="menu-text"> Dashboard </span>
 						</a>
 
 						<b class="arrow"></b>
 					</li>
-
+<!-- 
 					<li class="">
 						<a href="#" class="dropdown-toggle">
 							<i class="menu-icon fa fa-desktop"></i>
@@ -240,9 +240,9 @@
 								</ul>
 							</li>
 						</ul>
-					</li>
+					</li> -->
 
-					<li class="">
+					<!-- <li class="">
 						<a href="#" class="dropdown-toggle">
 							<i class="menu-icon fa fa-list"></i>
 							<span class="menu-text"> Tables </span>
@@ -271,8 +271,8 @@
 								<b class="arrow"></b>
 							</li>
 						</ul>
-					</li>
-
+					</li> -->
+<!-- 
 					<li class="">
 						<a href="#" class="dropdown-toggle">
 							<i class="menu-icon fa fa-pencil-square-o"></i>
@@ -329,8 +329,8 @@
 								<b class="arrow"></b>
 							</li>
 						</ul>
-					</li>
-
+					</li> -->
+<!-- 
 					<li class="">
 						<a href="widgets.html">
 							<i class="menu-icon fa fa-list-alt"></i>
@@ -338,8 +338,8 @@
 						</a>
 
 						<b class="arrow"></b>
-					</li>
-
+					</li> -->
+<!-- 
 					<li class="">
 						<a href="calendar.html">
 							<i class="menu-icon fa fa-calendar"></i>
@@ -354,8 +354,8 @@
 						</a>
 
 						<b class="arrow"></b>
-					</li>
-
+					</li> -->
+<!-- 
 					<li class="">
 						<a href="gallery.html">
 							<i class="menu-icon fa fa-picture-o"></i>
@@ -363,8 +363,8 @@
 						</a>
 
 						<b class="arrow"></b>
-					</li>
-
+					</li> -->
+<!-- 
 					<li class="">
 						<a href="#" class="dropdown-toggle">
 							<i class="menu-icon fa fa-tag"></i>
@@ -448,8 +448,8 @@
 								<b class="arrow"></b>
 							</li>
 						</ul>
-					</li>
-
+					</li> -->
+<!-- 
 					<li class="active open">
 						<a href="#" class="dropdown-toggle">
 							<i class="menu-icon fa fa-file-o"></i>
@@ -511,7 +511,7 @@
 								<b class="arrow"></b>
 							</li>
 						</ul>
-					</li>
+					</li> -->
 				</ul><!-- /.nav-list -->
 
 				<div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
