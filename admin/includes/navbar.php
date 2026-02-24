@@ -290,8 +290,8 @@
 							<ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
 								<li>
 									<a href="#">
-										<i class="ace-icon fa fa-cog"></i>
-										Settings
+										<!-- <i class="ace-icon fa fa-cog"></i> -->
+										<!-- Settings -->
 									</a>
 								</li>
 
