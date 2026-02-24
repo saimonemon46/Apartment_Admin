@@ -56,13 +56,13 @@
 						<ul class="breadcrumb">
 							<li>
 								<i class="ace-icon fa fa-home home-icon"></i>
-								<a href="#">Home</a>
+								<a href="dashboard.php">Home</a>
 							</li>
 
-							<li>
+							<!-- <li>
 								<a href="#">Other Pages</a>
 							</li>
-							<li class="active">Blank Page</li>
+							<li class="active">Blank Page</li> -->
 						</ul><!-- /.breadcrumb -->
 
 						<div class="nav-search" id="nav-search">
