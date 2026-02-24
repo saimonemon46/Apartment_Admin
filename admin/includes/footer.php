@@ -2,8 +2,8 @@
 				<div class="footer-inner">
 					<div class="footer-content">
 						<span class="bigger-120">
-							<span class="blue bolder">Ace</span>
-							Application &copy; 2013-2014
+							<span class="blue bolder">Apartment</span>
+							Application &copy; 2025-2026
 						</span>
 
 						&nbsp; &nbsp;
