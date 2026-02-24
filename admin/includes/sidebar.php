@@ -43,6 +43,7 @@
 
 						<b class="arrow"></b>
 					</li>
+
 <!-- 
 					<li class="">
 						<a href="#" class="dropdown-toggle">
@@ -242,10 +243,10 @@
 						</ul>
 					</li> -->
 
-					<!-- <li class="">
+					<li class="">
 						<a href="#" class="dropdown-toggle">
-							<i class="menu-icon fa fa-list"></i>
-							<span class="menu-text"> Tables </span>
+							<i class="menu-icon fa fa-user"></i>
+							<span class="menu-text"> Visitors </span>
 
 							<b class="arrow fa fa-angle-down"></b>
 						</a>
@@ -254,24 +255,24 @@
 
 						<ul class="submenu">
 							<li class="">
-								<a href="tables.html">
+								<a href="new_visitors.php">
 									<i class="menu-icon fa fa-caret-right"></i>
-									Simple &amp; Dynamic
+									New Visitors
 								</a>
 
 								<b class="arrow"></b>
 							</li>
 
 							<li class="">
-								<a href="jqgrid.html">
+								<a href="manage_visitors.php">
 									<i class="menu-icon fa fa-caret-right"></i>
-									jqGrid plugin
+									Manage Visitors
 								</a>
 
 								<b class="arrow"></b>
 							</li>
 						</ul>
-					</li> -->
+					</li>
 <!-- 
 					<li class="">
 						<a href="#" class="dropdown-toggle">
