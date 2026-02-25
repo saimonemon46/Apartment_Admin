@@ -39,7 +39,7 @@
                             <span class="bigger-110">Remove Photo</span>
                         </a>
 
-                        <a href="#" class="btn btn-sm btn-block btn-primary">
+                        <a href="change_photo.php" class="btn btn-sm btn-block btn-primary">
                             <i class="ace-icon fa fa-envelope-o bigger-110"></i>
                             <span class="bigger-110">Change Photo</span>
                         </a>
