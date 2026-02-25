@@ -1,25 +1,29 @@
 <?php include 'includes/header.php'; ?>
 
+<script>
+    #dropzone .dz-message .fa {
+    font-size: 90px;
+    color: #6fb3e0;
+}
+
+#dropzone .dz-message {
+    font-size: 20px;
+    padding: 40px 0;
+    text-align: center;
+}
+</script>
+
+
 				<div class="main-content-inner">
 
 
 					<div class="page-content">
-						<div class="ace-settings-container" id="ace-settings-container">
-							<div class="btn btn-app btn-xs btn-warning ace-settings-btn" id="ace-settings-btn">
-								<i class="ace-icon fa fa-cog bigger-130"></i>
-							</div>
 
 
 
-						<div class="page-header">
-							<h1>
-								Dropzone.js
-								<small>
-									<i class="ace-icon fa fa-angle-double-right"></i>
-									Drag &amp; drop file upload with image preview
-								</small>
-							</h1>
-						</div><!-- /.page-header -->
+
+
+
 
 						<div class="row">
 							<div class="col-xs-12">
@@ -27,18 +31,24 @@
 								<div class="alert alert-info">
 									<i class="ace-icon fa fa-hand-o-right"></i>
 
-									Please note that demo server is not configured to save uploaded files, therefore you may get an error message.
+									Please drop your profile picture here or click to upload.
 									<button class="close" data-dismiss="alert">
 										<i class="ace-icon fa fa-times"></i>
 									</button>
 								</div>
 
 								<div>
-									<form action="./dummy.html" class="dropzone well" id="dropzone">
-										<div class="fallback">
-											<input name="file" type="file" multiple="" />
-										</div>
-									</form>
+                                    <form action="./dummy.html" class="dropzone well dz-clickable" id="dropzone">
+                                        <div class="dz-message">
+                                            <i class="ace-icon fa fa-cloud-upload" style="font-size: 80px; color:#6fb3e0;"></i>
+                                            <br><br>
+                                            <span class="bigger-110">Drop files here or click to upload.</span>
+                                        </div>
+
+                                        <div class="fallback">
+                                            <input name="file" type="file" multiple />
+                                        </div>
+                                    </form>
 								</div>
 
 								<div id="preview-template" class="hide">
