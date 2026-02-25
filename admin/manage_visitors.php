@@ -71,20 +71,17 @@
 <td>
     <div class="hidden-sm hidden-xs btn-group">
 
-        <!-- DETAILS -->
-        <button class="btn btn-xs btn-primary" title="Details">
-            <i class="ace-icon fa fa-info-circle bigger-120"></i>
-        </button>
+	<a href="view_details.php" class="btn btn-xs btn-primary" title="Details">
+		<i class="ace-icon fa fa-info-circle bigger-120"></i>
+	</a>
 
-        <!-- UPDATE -->
-        <button class="btn btn-xs btn-warning" title="Update">
-            <i class="ace-icon fa fa-pencil bigger-120"></i>
-        </button>
+	<a href="update_visitors.php" class="btn btn-xs btn-warning" title="Update">
+		<i class="ace-icon fa fa-pencil bigger-120"></i>
+	</a>
 
-        <!-- DELETE -->
-        <button class="btn btn-xs btn-danger" title="Delete">
-            <i class="ace-icon fa fa-trash bigger-120"></i>
-        </button>
+	<a href="delete_visitors.php" class="btn btn-xs btn-danger" title="Delete">
+		<i class="ace-icon fa fa-trash bigger-120"></i>
+	</a>
 
     </div>
 
@@ -98,7 +95,7 @@
             <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
 
                 <li>
-                    <a href="#" class="tooltip-info" data-rel="tooltip" title="Details">
+                    <a href="view_details.php" class="tooltip-info" data-rel="tooltip" title="Details">
                         <span class="blue">
                             <i class="ace-icon fa fa-info-circle bigger-120"></i>
                         </span>
@@ -106,7 +103,7 @@
                 </li>
 
                 <li>
-                    <a href="#" class="tooltip-success" data-rel="tooltip" title="Update">
+                    <a href="update_visitors.php" class="tooltip-success" data-rel="tooltip" title="Update">
                         <span class="green">
                             <i class="ace-icon fa fa-pencil bigger-120"></i>
                         </span>
@@ -114,7 +111,7 @@
                 </li>
 
                 <li>
-                    <a href="#" class="tooltip-error" data-rel="tooltip" title="Delete">
+                    <a href="delete_visitors.php" class="tooltip-error" data-rel="tooltip" title="Delete">
                         <span class="red">
                             <i class="ace-icon fa fa-trash bigger-120"></i>
                         </span>
