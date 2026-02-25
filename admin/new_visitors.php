@@ -99,6 +99,21 @@
                 </div>
             </div>
 
+            <!-- Date & Time -->
+
+<!-- Date & Time -->
+<div class="form-group">
+    <label class="col-sm-3 control-label no-padding-right">Date & Time</label>
+    <div class="col-sm-3">
+        <div class="input-group">
+            <input type="text" id="visit_datetime" class="form-control" placeholder="Select date & time" />
+            <span class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+            </span>
+        </div>
+    </div>
+</div>
+
             <!-- Submit + Reset -->
             <div class="clearfix form-actions">
                 <div class="col-md-offset-3 col-md-9">
@@ -119,4 +134,18 @@
     </div>
 </div>
 
+
 <?php include 'includes/footer.php'; ?>
+
+
+<script src="assets/js/moment.min.js"></script>
+<script src="assets/js/bootstrap-datetimepicker.min.js"></script>
+
+<script>
+    $('#visit_datetime_picker').datetimepicker({
+        format: 'YYYY-MM-DD hh:mm A',
+        showClose: true,
+        showClear: true,
+        showTodayButton: true
+    });
+</script>
