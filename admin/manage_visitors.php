@@ -17,111 +17,99 @@
 										<table id="simple-table" class="table  table-bordered table-hover">
 											<thead>
 												<tr>
-													<th class="center">
-														<label class="pos-rel">
-															<input type="checkbox" class="ace" />
-															<span class="lbl"></span>
-														</label>
-													</th>
-													<th class="detail-col">Details</th>
-													<th>Domain</th>
-													<th>Price</th>
-													<th class="hidden-480">Clicks</th>
+
+													<th class="detail-col">Sl</th>
+													<th>Visitor Name</th>
+													<th>Category</th>
+													<th class="hidden-480">Apartment No</th>
 
 													<th>
-														<i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>
-														Update
+														<!-- <i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i> -->
+														Whom to Meet
 													</th>
-													<th class="hidden-480">Status</th>
 
-													<th></th>
+
+													<th>Actions</th>
 												</tr>
 											</thead>
-																					<div class="table-header">
+										<div class="table-header">
 											Results for "Latest Visitors"
 										</div>
 											<tbody>
 												<tr>
-													<td class="center">
-														<label class="pos-rel">
-															<input type="checkbox" class="ace" />
-															<span class="lbl"></span>
-														</label>
-													</td>
+
 
 													<td class="center">
 														<div class="action-buttons">
 															<a href="#" class="green bigger-140 show-details-btn" title="Show Details">
-																<i class="ace-icon fa fa-angle-double-down"></i>
+																<!-- <i class="ace-icon fa fa-angle-double-down"></i> -->
 																<span class="sr-only">Details</span>
 															</a>
 														</div>
 													</td>
 
 													<td>
-														<a href="#">ace.com</a>
+														saimon
 													</td>
 													<td>$45</td>
 													<td class="hidden-480">3,330</td>
 													<td>Feb 12</td>
 
-													<td class="hidden-480">
-														<span class="label label-sm label-warning">Expiring</span>
+
+													<td>
+														<div class="hidden-sm hidden-xs btn-group">
+
+														<a href="view_details.php" class="btn btn-xs btn-primary" title="Details">
+															<i class="ace-icon fa fa-info-circle bigger-120"></i>
+														</a>
+
+														<a href="update_visitors.php" class="btn btn-xs btn-warning" title="Update">
+															<i class="ace-icon fa fa-pencil bigger-120"></i>
+														</a>
+
+														<a href="delete_visitors.php" class="btn btn-xs btn-danger" title="Delete">
+															<i class="ace-icon fa fa-trash bigger-120"></i>
+														</a>
+
+														</div>
+
+														<!-- MOBILE DROPDOWN -->
+														<div class="hidden-md hidden-lg">
+															<div class="inline pos-rel">
+																<button class="btn btn-minier btn-primary dropdown-toggle" data-toggle="dropdown" data-position="auto">
+																	<i class="ace-icon fa fa-cog icon-only bigger-110"></i>
+																</button>
+
+																<ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+
+																	<li>
+																		<a href="view_details.php" class="tooltip-info" data-rel="tooltip" title="Details">
+																			<span class="blue">
+																				<i class="ace-icon fa fa-info-circle bigger-120"></i>
+																			</span>
+																		</a>
+																	</li>
+
+																	<li>
+																		<a href="update_visitors.php" class="tooltip-success" data-rel="tooltip" title="Update">
+																			<span class="green">
+																				<i class="ace-icon fa fa-pencil bigger-120"></i>
+																			</span>
+																		</a>
+																	</li>
+
+																	<li>
+																		<a href="delete_visitors.php" class="tooltip-error" data-rel="tooltip" title="Delete">
+																			<span class="red">
+																				<i class="ace-icon fa fa-trash bigger-120"></i>
+																			</span>
+																		</a>
+																	</li>
+
+																</ul>
+															</div>
+														</div>
 													</td>
-<td>
-    <div class="hidden-sm hidden-xs btn-group">
-
-	<a href="view_details.php" class="btn btn-xs btn-primary" title="Details">
-		<i class="ace-icon fa fa-info-circle bigger-120"></i>
-	</a>
-
-	<a href="update_visitors.php" class="btn btn-xs btn-warning" title="Update">
-		<i class="ace-icon fa fa-pencil bigger-120"></i>
-	</a>
-
-	<a href="delete_visitors.php" class="btn btn-xs btn-danger" title="Delete">
-		<i class="ace-icon fa fa-trash bigger-120"></i>
-	</a>
-
-    </div>
-
-    <!-- MOBILE DROPDOWN -->
-    <div class="hidden-md hidden-lg">
-        <div class="inline pos-rel">
-            <button class="btn btn-minier btn-primary dropdown-toggle" data-toggle="dropdown" data-position="auto">
-                <i class="ace-icon fa fa-cog icon-only bigger-110"></i>
-            </button>
-
-            <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
-
-                <li>
-                    <a href="view_details.php" class="tooltip-info" data-rel="tooltip" title="Details">
-                        <span class="blue">
-                            <i class="ace-icon fa fa-info-circle bigger-120"></i>
-                        </span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="update_visitors.php" class="tooltip-success" data-rel="tooltip" title="Update">
-                        <span class="green">
-                            <i class="ace-icon fa fa-pencil bigger-120"></i>
-                        </span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="delete_visitors.php" class="tooltip-error" data-rel="tooltip" title="Delete">
-                        <span class="red">
-                            <i class="ace-icon fa fa-trash bigger-120"></i>
-                        </span>
-                    </a>
-                </li>
-
-            </ul>
-        </div>
-    </div>
-</td>
 												</tr>
 											</tbody>
 										</table>
