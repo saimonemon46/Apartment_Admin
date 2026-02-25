@@ -19,7 +19,11 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right">Category</label>
                 <div class="col-sm-3">
-                    <select class="form-control" id="category">
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="ace-icon fa fa-list"></i>
+                        </span>
+                        <select class="form-control" id="category">
                         <option value=""></option>
                         <option>Car Cleaner</option>
                         <option>Cook</option>
@@ -31,7 +35,8 @@
                         <option>Newspaper Boy</option>
                         <option>Electrician</option>
                         <option>Other</option>
-                    </select>
+                        </select>
+                    </div>
                 </div>
             </div>
 
@@ -39,7 +44,12 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right" for="visitor_name">Visitor Name</label>
                 <div class="col-sm-9">
-                    <input type="text" id="visitor_name" placeholder="Enter visitor name" class="col-xs-10 col-sm-5" />
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="ace-icon fa fa-user"></i>
+                        </span>
+                        <input type="text" id="visitor_name" placeholder="Enter visitor name" class="form-control" />
+                    </div>
                 </div>
             </div>
 
@@ -63,7 +73,12 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right" for="address">Address</label>
                 <div class="col-sm-3">
-                    <textarea id="address" rows="3" placeholder="Visitor address" class="form-control"></textarea>
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="ace-icon fa fa-map-marker"></i>
+                        </span>
+                        <textarea id="address" rows="3" placeholder="Visitor address" class="form-control"></textarea>
+                    </div>
                 </div>
             </div>
 
@@ -71,7 +86,12 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right" for="apartment_no">Apartment No</label>
                 <div class="col-sm-9">
-                    <input type="text" id="apartment_no" placeholder="Apartment No" class="col-xs-10 col-sm-5" />
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="ace-icon fa fa-building"></i>
+                        </span>
+                        <input type="text" id="apartment_no" placeholder="Apartment No" class="form-control" />
+                    </div>
                 </div>
             </div>
 
@@ -79,7 +99,12 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right" for="floor_no">Floor No</label>
                 <div class="col-sm-9">
-                    <input type="text" id="floor_no" placeholder="Floor No" class="col-xs-10 col-sm-5" />
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="ace-icon fa fa-sort-numeric-up"></i>
+                        </span>
+                        <input type="text" id="floor_no" placeholder="Floor No" class="form-control" />
+                    </div>
                 </div>
             </div>
 
@@ -87,7 +112,12 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right" for="meet_person">Whom to Meet</label>
                 <div class="col-sm-9">
-                    <input type="text" id="meet_person" placeholder="Name of resident to meet" class="col-xs-10 col-sm-5" />
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="ace-icon fa fa-handshake-o"></i>
+                        </span>
+                        <input type="text" id="meet_person" placeholder="Name of resident to meet" class="form-control" />
+                    </div>
                 </div>
             </div>
 
@@ -95,7 +125,12 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right" for="reason">Reason to Meet</label>
                 <div class="col-sm-9">
-                    <input type="text" id="reason" placeholder="Reason" class="col-xs-10 col-sm-5" />
+                    <div class="input-group">
+                        <span class="input-group-addon">
+                            <i class="ace-icon fa fa-comment-o"></i>
+                        </span>
+                        <input type="text" id="reason" placeholder="Reason" class="form-control" />
+                    </div>
                 </div>
             </div>
 
@@ -142,10 +177,15 @@
 <script src="assets/js/bootstrap-datetimepicker.min.js"></script>
 
 <script>
-    $('#visit_datetime_picker').datetimepicker({
+    $('#visit_datetime').datetimepicker({
         format: 'YYYY-MM-DD hh:mm A',
+        defaultDate: moment(),
+        useCurrent: true,
         showClose: true,
         showClear: true,
         showTodayButton: true
     });
+    
+    // Set current local date and time on page load
+    $('#visit_datetime').data("DateTimePicker").date(moment());
 </script>
