@@ -51,9 +51,9 @@
 													<td>
 														saimon
 													</td>
-													<td>$45</td>
-													<td class="hidden-480">3,330</td>
-													<td>Feb 12</td>
+													<td>Maid</td>
+													<td class="hidden-480">3A</td>
+													<td>Mr. Nazmul Alom</td>
 
 
 													<td>
