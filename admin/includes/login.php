@@ -1,3 +1,40 @@
+<?php
+session_start();
+// if already logged in, redirect to dashboard
+if (isset($_SESSION['admin_id'])) {
+    header('Location: ../dashboard.php');
+    exit;
+}
+
+// include database connection
+require_once 'config.php';
+
+$error = '';
+if (
+    $_SERVER['REQUEST_METHOD'] === 'POST'
+) {
+    $username = trim($_POST['username'] ?? '');
+    $password = $_POST['password'] ?? '';
+
+    if ($username === '' || $password === '') {
+        $error = 'Please enter username and password.';
+    } else {
+        $stmt = $dbh->prepare('SELECT * FROM admins WHERE username = :username LIMIT 1');
+        $stmt->execute([':username' => $username]);
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($user && password_verify($password, $user['password'])) {
+            // store minimal session information
+            $_SESSION['admin_id']       = $user['id'];
+            $_SESSION['admin_username'] = $user['username'];
+
+            header('Location: ../dashboard.php');
+            exit;
+        } else {
+            $error = 'Invalid username or password.';
+        }
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -65,18 +102,21 @@
 
 											<div class="space-6"></div>
 
-											<form>
+											<form method="post" action="" autocomplete="off">
 												<fieldset>
+									<?php if (!empty($error)): ?>
+										<div class="alert alert-danger"><?php echo htmlspecialchars($error); ?></div>
+									<?php endif; ?>
 													<label class="block clearfix">
 														<span class="block input-icon input-icon-right">
-															<input type="text" class="form-control" placeholder="Username" />
+															<input type="text" name="username" class="form-control" placeholder="Username" required />
 															<i class="ace-icon fa fa-user"></i>
 														</span>
 													</label>
 
 													<label class="block clearfix">
 														<span class="block input-icon input-icon-right">
-															<input type="password" class="form-control" placeholder="Password" />
+															<input type="password" name="password" class="form-control" placeholder="Password" required />
 															<i class="ace-icon fa fa-lock"></i>
 														</span>
 													</label>
@@ -89,7 +129,7 @@
 															<span class="lbl"> Remember Me</span>
 														</label>
 
-														<button type="button" class="width-35 pull-right btn btn-sm btn-primary">
+														<button type="submit" class="width-35 pull-right btn btn-sm btn-primary">
 															<i class="ace-icon fa fa-key"></i>
 															<span class="bigger-110">Login</span>
 														</button>

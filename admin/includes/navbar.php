@@ -21,6 +21,23 @@
 
 				<div class="navbar-buttons navbar-header pull-right" role="navigation">
 					<ul class="nav ace-nav">
+
+<?php if(isset($_SESSION['admin_username'])): ?>
+<li class="light-blue">
+    <a data-toggle="dropdown" href="#" class="dropdown-toggle">
+        <span class="user-info">
+            <small>Welcome,</small>
+            <?php echo htmlspecialchars($_SESSION['admin_username']); ?>
+        </span>
+        <i class="ace-icon fa fa-caret-down"></i>
+    </a>
+    <ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+        <li>
+            <a href="logout.php"><i class="ace-icon fa fa-power-off"></i>Logout</a>
+        </li>
+    </ul>
+</li>
+<?php endif; ?>
 						<!-- <li class="grey dropdown-modal">
 							<a data-toggle="dropdown" class="dropdown-toggle" href="#">
 								<i class="ace-icon fa fa-tasks"></i>

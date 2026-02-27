@@ -1,3 +1,11 @@
+<?php
+session_start();
+// redirect to login if not authenticated
+if (!isset($_SESSION['admin_id'])) {
+    header('Location: index.php');
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
