@@ -6,7 +6,7 @@ if (!isset($_SESSION['admin_id'])) {
     exit;
 }
 
-include 'includes/config.php';
+require_once 'config.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">

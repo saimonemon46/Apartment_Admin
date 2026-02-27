@@ -1,6 +1,6 @@
 <?php 
 	include 'includes/header.php';
-	$stmt = $pdo->query("SELECT * FROM visitors ORDER BY id DESC");
+	$stmt = $dbh->query("SELECT * FROM visitors ORDER BY id DESC");
 	$visitors = $stmt->fetchAll(PDO::FETCH_ASSOC); 
 
 ?> 
