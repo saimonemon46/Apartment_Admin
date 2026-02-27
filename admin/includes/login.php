@@ -114,7 +114,7 @@
 													<i class="ace-icon fa fa-twitter"></i>
 												</a>
 
-												<a class="btn btn-danger">
+												<a class="btn btn-danger" >
 													<i class="ace-icon fa fa-google-plus"></i>
 												</a>
 											</div>
