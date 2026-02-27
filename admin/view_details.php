@@ -1,9 +1,9 @@
 <?php 
-include 'includes/header.php';
 
 // ensure out_time column exists (silent if already present)
 try {
-    $dbh->exec("ALTER TABLE visitors ADD COLUMN out_time DATETIME NULL");
+    include 'includes/config.php';
+    $dbh->exec("ALTER TABLE visitors ADD COLUMN exit_time DATETIME NULL");
 } catch (PDOException $e) {
     // ignore errors (likely column already exists)
 }
@@ -17,7 +17,7 @@ if ($id <= 0) {
 
 // handle marking out time
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['mark_out'])) {
-    $upd = $dbh->prepare("UPDATE visitors SET out_time = NOW() WHERE id = :id");
+    $upd = $dbh->prepare("UPDATE visitors SET exit_time = NOW() WHERE id = :id");
     $upd->execute([':id' => $id]);
     header('Location: view_details.php?id=' . $id);
     exit;
@@ -27,11 +27,13 @@ $stmt = $dbh->prepare("SELECT * FROM visitors WHERE id = :id");
 $stmt->execute([':id' => $id]);
 $visitor = $stmt->fetch(PDO::FETCH_ASSOC);
 if (!$visitor) {
-    echo '<div class="alert alert-warning">Visitor not found.</div>';
-    include 'includes/footer.php';
-    exit;
+    // Will display error in HTML below after header
+    $visitor_error = true;
 }
-?> 
+
+// Now include header (after all logic and header calls)
+include 'includes/header.php';
+?>
 
 <div class="page-header">
     <h1>
@@ -42,6 +44,16 @@ if (!$visitor) {
         </small>
     </h1>
 </div>
+
+<?php if (isset($visitor_error) && $visitor_error): ?>
+    <div class="alert alert-warning">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>Warning!</strong> Visitor not found.
+    </div>
+    <?php include 'includes/footer.php'; include 'includes/sidebar.php'; ?>
+    </body></html>
+    <?php exit; ?>
+<?php endif; ?>
 
 <div class="row">
     <div class="col-xs-12">
@@ -58,11 +70,7 @@ if (!$visitor) {
                     </tr>
                     <tr>
                         <td><strong>Phone</strong></td>
-                        <td><?php echo htmlspecialchars($visitor['phone'] ?? ''); ?></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Address</strong></td>
-                        <td><?php echo htmlspecialchars($visitor['address'] ?? ''); ?></td>
+                        <td><?php echo htmlspecialchars($visitor['phone']); ?></td>
                     </tr>
                     <tr>
                         <td><strong>Apartment No</strong></td>
@@ -70,30 +78,35 @@ if (!$visitor) {
                     </tr>
                     <tr>
                         <td><strong>Floor No</strong></td>
-                        <td><?php echo htmlspecialchars($visitor['floor_no'] ?? ''); ?></td>
+                        <td><?php echo htmlspecialchars($visitor['floor']); ?></td>
                     </tr>
                     <tr>
                         <td><strong>Whom to Meet</strong></td>
                         <td><?php echo htmlspecialchars($visitor['whom_to_meet']); ?></td>
                     </tr>
+
                     <tr>
-                        <td><strong>Reason</strong></td>
-                        <td><?php echo htmlspecialchars($visitor['reason'] ?? ''); ?></td>
+                        <td><strong>Address</strong></td>
+                        <td><?php echo htmlspecialchars($visitor['address']); ?></td>
                     </tr>
                     <tr>
-                        <td><strong>In Time</strong></td>
-                        <td><?php echo htmlspecialchars($visitor['entry_date']); ?></td>
+                        <td><strong>Reason for Visit</strong></td>
+                        <td><?php echo htmlspecialchars($visitor['reason']); ?></td>
                     </tr>
                     <tr>
-                        <td><strong>Out Time</strong></td>
+                        <td><strong>Entry Date</strong></td>
+                        <td><?php echo htmlspecialchars($visitor['entry_time']); ?></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Exit Time</strong></td>
                         <td>
-                            <?php if (!empty($visitor['out_time'])): ?>
-                                <?php echo htmlspecialchars($visitor['out_time']); ?>
+                            <?php if (!empty($visitor['exit_time'])): ?>
+                                <?php echo htmlspecialchars($visitor['exit_time']); ?>
                             <?php else: ?>
                                 <form method="post" class="form-inline" style="display:inline;">
                                     <input type="hidden" name="mark_out" value="1">
                                     <button class="btn btn-danger" type="submit">
-                                        <i class="ace-icon fa fa-sign-out bigger-110"></i> OUT
+                                        <i class="ace-icon fa fa-sign-out bigger-110"></i> Mark Exit
                                     </button>
                                 </form>
                             <?php endif; ?>
