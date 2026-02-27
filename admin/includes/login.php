@@ -2,7 +2,7 @@
 session_start();
 // if already logged in, redirect to dashboard
 if (isset($_SESSION['admin_id'])) {
-    header('Location: ../dashboard.php');
+    header('Location: dashboard.php');
     exit;
 }
 
@@ -27,7 +27,7 @@ if (
             $_SESSION['admin_id']       = $user['id'];
             $_SESSION['admin_username'] = $user['username'];
 
-            header('Location: ../dashboard.php');
+            header('Location: dashboard.php');
             exit;
         } else {
             $error = 'Invalid username or password.';
