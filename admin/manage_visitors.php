@@ -1,4 +1,9 @@
-<?php include 'includes/header.php'; ?> 
+<?php 
+	include 'includes/header.php';
+	$stmt = $pdo->query("SELECT * FROM visitors ORDER BY id DESC");
+	$visitors = $stmt->fetchAll(PDO::FETCH_ASSOC); 
+
+?> 
 						<div class="page-header">
 							<h1>
 								Manage Visitors
@@ -36,24 +41,22 @@
 											Results for "Latest Visitors"
 										</div>
 											<tbody>
-												<tr>
+												<?php
+												$sl = 1; // Counter for serial column
+												foreach ($visitors as $visitor): ?>
+												<tr class="center">
 
 
-													<td class="center">
-														<div class="action-buttons">
-															<a href="#" class="green bigger-140 show-details-btn" title="Show Details">
-																<!-- <i class="ace-icon fa fa-angle-double-down"></i> -->
-																<span class="sr-only">Details</span>
-															</a>
-														</div>
+													<td>
+														<?php echo $sl++; ?>
 													</td>
 
 													<td>
-														saimon
+														<?php echo htmlspecialchars($visitor['name']); ?>
 													</td>
-													<td>Maid</td>
-													<td class="hidden-480">3A</td>
-													<td>Mr. Nazmul Alom</td>
+													<td><?php echo htmlspecialchars($visitor['category']); ?></td>
+													<td class="hidden-480"><?php echo htmlspecialchars($visitor['apartment_no']); ?></td>
+													<td><?php echo htmlspecialchars($visitor['whom_to_meet']); ?></td>
 
 
 													<td>
@@ -111,6 +114,7 @@
 														</div>
 													</td>
 												</tr>
+												<?php endforeach; ?>
 											</tbody>
 										</table>
 									</div>
