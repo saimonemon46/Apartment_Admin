@@ -7,7 +7,7 @@ if (isset($_SESSION['admin_id'])) {
 }
 
 // include database connection
-require_once 'config.php';
+include 'config.php';
 
 $error = '';
 if (
@@ -23,12 +23,23 @@ if (
         $stmt->execute([':username' => $username]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
         if ($user && password_verify($password, $user['password'])) {
-            // store minimal session information
-            $_SESSION['admin_id']       = $user['id'];
-            $_SESSION['admin_username'] = $user['username'];
+			// ... inside your if ($user && password_verify(...)) block ...
 
-            header('Location: dashboard.php');
-            exit;
+			// Existing session variables
+			$_SESSION['admin_id']           = $user['id'];
+			$_SESSION['admin_username']     = $user['username'];
+
+			// ADD THESE MISSING ONES TO FIX THE WARNINGS:
+			$_SESSION['full_name']          = $user['full_name']; // Matches 'full_name' warning
+			$_SESSION['admin_email']        = $user['email'];
+			$_SESSION['admin_country']      = $user['country'];
+			$_SESSION['admin_city']         = $user['city'];
+			$_SESSION['admin_age']          = $user['age']; // Matches 'admin_age' warning
+			$_SESSION['admin_profile_pic']  = $user['profile_pic'];
+			$_SESSION['admin_joined_date']  = $user['created_at']; // Matches 'admin_joined_date' warning
+
+			header('Location: dashboard.php');
+			exit;
         } else {
             $error = 'Invalid username or password.';
         }

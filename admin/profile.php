@@ -1,3 +1,5 @@
+
+
 <?php include 'includes/header.php'; ?>	
 
 
@@ -26,10 +28,16 @@
         <div class="tab-content no-border padding-24">
             <div id="home" class="tab-pane in active">
                 <div class="row">
+                    <?php if(isset($_SESSION['admin_username'])): ?>
+
 
                     <div class="col-xs-12 col-sm-3 center">
                         <span class="profile-picture">
-                            <img class="editable img-responsive" alt="Alex's Avatar" id="avatar2" src="assets/images/avatars/profile-pic.jpg" />
+                            <img class="editable img-responsive" alt="Avatar" id="avatar2" src="<?php echo htmlspecialchars(
+    
+    
+    $_SESSION['admin_profile_pic'] ?? 'assets/images/avatars/avatar.png'
+); ?>" />
                         </span>
 
                         <div class="space space-4"></div>
@@ -47,7 +55,7 @@
 
                     <div class="col-xs-12 col-sm-9">
                         <h4 class="blue">
-                            <span class="middle">Alex M. Doe</span>
+                            <span class="middle"><?php echo htmlspecialchars($_SESSION['full_name']); ?></span>
                         </h4>
 
                         <div class="profile-user-info">
@@ -55,30 +63,36 @@
                             <div class="profile-info-row">
                                 <div class="profile-info-name"> Username </div>
                                 <div class="profile-info-value">
-                                    <span>alexdoe</span>
+                                    <span><?php echo htmlspecialchars($_SESSION['admin_username']); ?></span>
                                 </div>
                             </div>
 
                             <div class="profile-info-row">
+                                <div class="profile-info-name"> Email </div>
+                                <div class="profile-info-value">
+                                    <span><?php echo htmlspecialchars($_SESSION['admin_email'] ?? ''); ?></span>
+                                </div>
+                            </div>
+                            <div class="profile-info-row">
                                 <div class="profile-info-name"> Location </div>
                                 <div class="profile-info-value">
                                     <i class="fa fa-map-marker light-orange bigger-110"></i>
-                                    <span>Netherlands</span>
-                                    <span>Amsterdam</span>
+                                    <span><?php echo htmlspecialchars($_SESSION['admin_country'] ?? ''); ?></span>
+                                    <span><?php echo htmlspecialchars($_SESSION['admin_city'] ?? ''); ?></span>
                                 </div>
                             </div>
 
                             <div class="profile-info-row">
                                 <div class="profile-info-name"> Age </div>
                                 <div class="profile-info-value">
-                                    <span>38</span>
+                                    <span><?php echo htmlspecialchars($_SESSION['admin_age']); ?></span>
                                 </div>
                             </div>
 
                             <div class="profile-info-row">
                                 <div class="profile-info-name"> Joined </div>
                                 <div class="profile-info-value">
-                                    <span>2010/06/20</span>
+                                    <span><?php echo htmlspecialchars($_SESSION['admin_joined_date']); ?></span>
                                 </div>
                             </div>
 
@@ -88,8 +102,11 @@
 
                         </div> <!-- profile-user-info -->
                     </div> <!-- col-xs-12 col-sm-9 -->
-
+                    
+<?php endif; ?>
                 </div> <!-- row -->
+
+                
             </div> <!-- tab-pane -->
         </div> <!-- tab-content -->
 

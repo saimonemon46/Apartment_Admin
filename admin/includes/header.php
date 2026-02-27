@@ -5,6 +5,8 @@ if (!isset($_SESSION['admin_id'])) {
     header('Location: index.php');
     exit;
 }
+
+include 'includes/config.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
