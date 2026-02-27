@@ -3,7 +3,7 @@
 // ensure out_time column exists (silent if already present)
 try {
     include 'includes/config.php';
-    $dbh->exec("ALTER TABLE visitors ADD COLUMN exit_time DATETIME NULL");
+    // $dbh->exec("ALTER TABLE visitors ADD COLUMN exit_time DATETIME NULL");
 } catch (PDOException $e) {
     // ignore errors (likely column already exists)
 }
