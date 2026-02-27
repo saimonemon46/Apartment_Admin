@@ -9,7 +9,7 @@
 							</h1>
 						</div><!-- /.page-header -->
 
-<div class="row">
+						<div class="row">
 							<div class="col-xs-12">
 								<!-- PAGE CONTENT BEGINS -->
 								<div class="row">
