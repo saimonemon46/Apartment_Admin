@@ -1,4 +1,37 @@
-<?php include 'includes/header.php'; ?>
+<?php 
+include 'includes/header.php';
+
+// ensure out_time column exists (silent if already present)
+try {
+    $dbh->exec("ALTER TABLE visitors ADD COLUMN out_time DATETIME NULL");
+} catch (PDOException $e) {
+    // ignore errors (likely column already exists)
+}
+
+// make sure we have a valid id parameter
+$id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+if ($id <= 0) {
+    header('Location: manage_visitors.php');
+    exit;
+}
+
+// handle marking out time
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['mark_out'])) {
+    $upd = $dbh->prepare("UPDATE visitors SET out_time = NOW() WHERE id = :id");
+    $upd->execute([':id' => $id]);
+    header('Location: view_details.php?id=' . $id);
+    exit;
+}
+
+$stmt = $dbh->prepare("SELECT * FROM visitors WHERE id = :id");
+$stmt->execute([':id' => $id]);
+$visitor = $stmt->fetch(PDO::FETCH_ASSOC);
+if (!$visitor) {
+    echo '<div class="alert alert-warning">Visitor not found.</div>';
+    include 'includes/footer.php';
+    exit;
+}
+?> 
 
 <div class="page-header">
     <h1>
@@ -17,78 +50,60 @@
                 <tbody>
                     <tr>
                         <td><strong>Category</strong></td>
-                        <td>Guest</td>
+                        <td><?php echo htmlspecialchars($visitor['category']); ?></td>
                     </tr>
                     <tr>
                         <td><strong>Visitor Name</strong></td>
-                        <td>John Doe</td>
+                        <td><?php echo htmlspecialchars($visitor['visitor_name']); ?></td>
                     </tr>
                     <tr>
                         <td><strong>Phone</strong></td>
-                        <td>+1 555-123-4567</td>
+                        <td><?php echo htmlspecialchars($visitor['phone'] ?? ''); ?></td>
                     </tr>
                     <tr>
                         <td><strong>Address</strong></td>
-                        <td>221B Baker Street, London</td>
+                        <td><?php echo htmlspecialchars($visitor['address'] ?? ''); ?></td>
                     </tr>
                     <tr>
                         <td><strong>Apartment No</strong></td>
-                        <td>A-12</td>
+                        <td><?php echo htmlspecialchars($visitor['apartment_no']); ?></td>
                     </tr>
                     <tr>
                         <td><strong>Floor No</strong></td>
-                        <td>3</td>
+                        <td><?php echo htmlspecialchars($visitor['floor_no'] ?? ''); ?></td>
                     </tr>
                     <tr>
                         <td><strong>Whom to Meet</strong></td>
-                        <td>Mr. Rahman</td>
+                        <td><?php echo htmlspecialchars($visitor['whom_to_meet']); ?></td>
                     </tr>
                     <tr>
                         <td><strong>Reason</strong></td>
-                        <td>General Visit</td>
+                        <td><?php echo htmlspecialchars($visitor['reason'] ?? ''); ?></td>
                     </tr>
                     <tr>
                         <td><strong>In Time</strong></td>
-                        <td>2026-02-25 10:15:34</td>
+                        <td><?php echo htmlspecialchars($visitor['entry_date']); ?></td>
                     </tr>
                     <tr>
                         <td><strong>Out Time</strong></td>
                         <td>
-                            <div class="input-group">
-                                <input type="text" id="out_time" class="form-control" readonly>
-                                <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
-                            </div>
+                            <?php if (!empty($visitor['out_time'])): ?>
+                                <?php echo htmlspecialchars($visitor['out_time']); ?>
+                            <?php else: ?>
+                                <form method="post" class="form-inline" style="display:inline;">
+                                    <input type="hidden" name="mark_out" value="1">
+                                    <button class="btn btn-danger" type="submit">
+                                        <i class="ace-icon fa fa-sign-out bigger-110"></i> OUT
+                                    </button>
+                                </form>
+                            <?php endif; ?>
                         </td>
                     </tr>
                 </tbody>
             </table>
         </div>
 
-        <!-- OUT Button -->
-        <div class="clearfix form-actions">
-            <button class="btn btn-danger" type="button">
-                <i class="ace-icon fa fa-sign-out bigger-110"></i>
-                OUT
-            </button>
-        </div>
     </div>
 </div>
 
 <?php include 'includes/footer.php'; ?>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const outField = document.getElementById("out_time");
-        const now = new Date();
-
-        const formatted =
-            now.getFullYear() + "-" +
-            String(now.getMonth() + 1).padStart(2,'0') + "-" +
-            String(now.getDate()).padStart(2,'0') + " " +
-            String(now.getHours()).padStart(2,'0') + ":" +
-            String(now.getMinutes()).padStart(2,'0') + ":" +
-            String(now.getSeconds()).padStart(2,'0');
-
-        outField.value = formatted;
-    });
-</script>
