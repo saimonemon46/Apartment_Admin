@@ -21,20 +21,20 @@
 									<div class="col-xs-12">
 										<table id="simple-table" class="table  table-bordered table-hover">
 											<thead>
-												<tr>
+												<tr class="center">
 
-													<th class="detail-col">Sl</th>
-													<th>Visitor Name</th>
-													<th>Category</th>
-													<th class="hidden-480">Apartment No</th>
+													<th class="center">Sl</th>
+													<th class="center">Visitor Name</th>
+													<th class="center">Category</th>
+													<th class="center">Apartment No</th>
 
-													<th>
+													<th class="center">
 														<!-- <i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i> -->
 														Whom to Meet
 													</th>
 
 
-													<th>Actions</th>
+													<th class="center">Actions</th>
 												</tr>
 											</thead>
 										<div class="table-header">
@@ -52,7 +52,7 @@
 													</td>
 
 													<td>
-														<?php echo htmlspecialchars($visitor['name']); ?>
+														<?php echo htmlspecialchars($visitor['visitor_name']); ?>
 													</td>
 													<td><?php echo htmlspecialchars($visitor['category']); ?></td>
 													<td class="hidden-480"><?php echo htmlspecialchars($visitor['apartment_no']); ?></td>
