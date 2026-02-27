@@ -62,7 +62,7 @@ require_once 'config.php';
                 <div class="main-container ace-save-state" id="main-container">
                     <?php include_once 'sidebar.php'; ?>
                     <div class="main-content">
-                        					<div class="breadcrumbs ace-save-state" id="breadcrumbs">
+                        <div class="breadcrumbs ace-save-state" id="breadcrumbs">
 						<ul class="breadcrumb">
 							<li>
 								<i class="ace-icon fa fa-home home-icon"></i>
