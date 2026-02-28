@@ -1,4 +1,85 @@
-<?php include 'includes/header.php'; ?> 
+<?php include 'includes/header.php'; 
+
+$success = '';
+$errors = array();
+
+
+// Load categories from `visitor_categories` table first, then fallback to distinct visitors.category, then to defaults
+$categories = array();
+try {
+    $stmt = $dbh->query("SELECT category_name FROM visitor_categories ORDER BY category_name");
+    $cats = $stmt->fetchAll(PDO::FETCH_COLUMN);
+    if ($cats) {
+        foreach ($cats as $c) {
+            if (strlen(trim($c)) > 0) $categories[] = $c;
+        }
+    }
+} catch (Exception $e) {
+    // ignore and try fallback
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $category = trim($_POST['category'] ?? '');
+    $visitor_name = trim($_POST['visitor_name'] ?? '');
+    $phone = trim($_POST['phone'] ?? '');
+    $address = trim($_POST['address'] ?? '');
+    $apartment_no = trim($_POST['apartment_no'] ?? '');
+    $floor = trim($_POST['floor'] ?? '');
+    $meet_person = trim($_POST['whom_to_meet'] ?? '');
+    $reason = trim($_POST['reason'] ?? '');
+    $visit_datetime = trim($_POST['visit_datetime'] ?? '');
+
+    if (empty($visitor_name)) {
+        $errors[] = 'Visitor name is required.';
+    }
+    if (empty($apartment_no)) {
+        $errors[] = 'Apartment number is required.';
+    }
+    if (empty($meet_person)) {
+        $errors[] = 'Whom to meet is required.';
+    }
+
+    // Normalize/convert visit datetime to MySQL DATETIME
+    if (empty($visit_datetime)) {
+        $visit_datetime = date('Y-m-d H:i:s');
+    } else {
+        $dt = DateTime::createFromFormat('Y-m-d h:i A', $visit_datetime);
+        if ($dt) {
+            $visit_datetime = $dt->format('Y-m-d H:i:s');
+        } else {
+            $dt2 = DateTime::createFromFormat('Y-m-d H:i', $visit_datetime);
+            if ($dt2) {
+                $visit_datetime = $dt2->format('Y-m-d H:i:s');
+            } else {
+                // fallback to now
+                $visit_datetime = date('Y-m-d H:i:s');
+            }
+        }
+    }
+
+    if (empty($errors)) {
+        $stmt = $dbh->prepare("INSERT INTO visitors (visitor_name, category, phone, address, apartment_no, floor, whom_to_meet, reason, entry_time) VALUES (:visitor_name, :category, :phone, :address, :apartment_no, :floor, :whom_to_meet, :reason, :entry_time)");
+        $res = $stmt->execute(array(
+            ':visitor_name' => $visitor_name,
+            ':category' => $category,
+            ':phone' => $phone,
+            ':address' => $address,
+            ':apartment_no' => $apartment_no,
+            ':floor' => $floor,
+            ':whom_to_meet' => $meet_person,
+            ':reason' => $reason,
+            ':entry_time' => $visit_datetime
+        ));
+
+        if ($res) {
+            $success = 'Visitor added successfully.';
+        } else {
+            $errors[] = 'Failed to add visitor to database.';
+        }
+    }
+}
+?>
+
 <div class="page-content">
     <div class="page-header">
         <h1>
@@ -11,10 +92,29 @@
     </div>
     <div class="row">
 
-        <div class="row">
+            <?php if (!empty($success)): ?>
+                <div class="col-xs-12">
+                    <div class="alert alert-success">
+                        <?php echo htmlspecialchars($success); ?>
+                    </div>
+                </div>
+            <?php endif; ?>
+
+            <?php if (!empty($errors)): ?>
+                <div class="col-xs-12">
+                    <div class="alert alert-danger">
+                        <ul style="margin:0;padding-left:18px;">
+                            <?php foreach ($errors as $e): ?>
+                                <li><?php echo htmlspecialchars($e); ?></li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </div>
+                </div>
+            <?php endif; ?>
+
             <div class="col-xs-12">
 
-                <form class="form-horizontal" role="form">
+                <form class="form-horizontal" role="form" method="post" action="">
 
                     <!-- Category -->
                     <div class="form-group">
@@ -24,18 +124,11 @@
                                 <span class="input-group-addon">
                                     <i class="ace-icon fa fa-list"></i>
                                 </span>
-                                <select class="form-control" id="category">
+                                <select class="form-control" id="category" name="category">
                                 <option value=""></option>
-                                <option>Car Cleaner</option>
-                                <option>Cook</option>
-                                <option>Driver</option>
-                                <option>Gardener</option>
-                                <option>Guest</option>
-                                <option>Maid</option>
-                                <option>Milk Man</option>
-                                <option>Newspaper Boy</option>
-                                <option>Electrician</option>
-                                <option>Other</option>
+                                <?php foreach ($categories as $cat): ?>
+                                    <option value="<?php echo htmlspecialchars($cat); ?>" <?php if (isset($_POST['category']) && $_POST['category'] === $cat) echo 'selected'; ?>><?php echo htmlspecialchars($cat); ?></option>
+                                <?php endforeach; ?>
                                 </select>
                             </div>
                         </div>
@@ -49,7 +142,7 @@
                                 <span class="input-group-addon">
                                     <i class="ace-icon fa fa-user"></i>
                                 </span>
-                                <input type="text" id="visitor_name" placeholder="Enter visitor name" class="form-control" />
+                                <input type="text" id="visitor_name" name="visitor_name" placeholder="Enter visitor name" class="form-control" value="<?php echo htmlspecialchars($_POST['visitor_name'] ?? ''); ?>" />
                             </div>
                         </div>
                     </div>
@@ -65,7 +158,7 @@
                                 <span class="input-group-addon">
                                     <i class="ace-icon fa fa-phone"></i>
                                 </span>
-                                <input type="text" id="phone" placeholder="Phone Number" class="form-control" />
+                                <input type="text" id="phone" name="phone" placeholder="Phone Number" class="form-control" value="<?php echo htmlspecialchars($_POST['phone'] ?? ''); ?>" />
                             </div>
                         </div>
                     </div>
@@ -78,7 +171,7 @@
                                 <span class="input-group-addon">
                                     <i class="ace-icon fa fa-map-marker"></i>
                                 </span>
-                                <textarea id="address" rows="3" placeholder="Visitor address" class="form-control"></textarea>
+                                <textarea id="address" name="address" rows="3" placeholder="Visitor address" class="form-control"><?php echo htmlspecialchars($_POST['address'] ?? ''); ?></textarea>
                             </div>
                         </div>
                     </div>
@@ -91,7 +184,7 @@
                                 <span class="input-group-addon">
                                     <i class="ace-icon fa fa-building"></i>
                                 </span>
-                                <input type="text" id="apartment_no" placeholder="Apartment No" class="form-control" />
+                                <input type="text" id="apartment_no" name="apartment_no" placeholder="Apartment No" class="form-control" value="<?php echo htmlspecialchars($_POST['apartment_no'] ?? ''); ?>" />
                             </div>
                         </div>
                     </div>
@@ -104,7 +197,7 @@
                                 <span class="input-group-addon">
                                     <i class="ace-icon fa fa-sort-numeric-up"></i>
                                 </span>
-                                <input type="text" id="floor_no" placeholder="Floor No" class="form-control" />
+                                <input type="text" id="floor_no" name="floor" placeholder="Floor No" class="form-control" value="<?php echo htmlspecialchars($_POST['floor'] ?? ''); ?>" />
                             </div>
                         </div>
                     </div>
@@ -117,7 +210,7 @@
                                 <span class="input-group-addon">
                                     <i class="ace-icon fa fa-handshake-o"></i>
                                 </span>
-                                <input type="text" id="meet_person" placeholder="Name of resident to meet" class="form-control" />
+                                <input type="text" id="meet_person" name="whom_to_meet" placeholder="Name of resident to meet" class="form-control" value="<?php echo htmlspecialchars($_POST['whom_to_meet'] ?? ''); ?>" />
                             </div>
                         </div>
                     </div>
@@ -130,7 +223,7 @@
                                 <span class="input-group-addon">
                                     <i class="ace-icon fa fa-comment-o"></i>
                                 </span>
-                                <input type="text" id="reason" placeholder="Reason" class="form-control" />
+                                <input type="text" id="reason" name="reason" placeholder="Reason" class="form-control" value="<?php echo htmlspecialchars($_POST['reason'] ?? ''); ?>" />
                             </div>
                         </div>
                     </div>
@@ -142,7 +235,7 @@
                         <label class="col-sm-3 control-label no-padding-right">Date & Time</label>
                         <div class="col-sm-4">
                             <div class="input-group">
-                                <input type="text" id="visit_datetime" class="form-control" placeholder="Select date & time" />
+                                <input type="text" id="visit_datetime" name="visit_datetime" class="form-control" placeholder="Select date & time" value="<?php echo htmlspecialchars($_POST['visit_datetime'] ?? ''); ?>" />
                                 <span class="input-group-addon">
                                     <i class="fa fa-calendar"></i>
                                 </span>
@@ -168,11 +261,9 @@
                 </form>
 
             </div>
-        </div>
+
     </div>
 </div>
-
-
 
 <?php include 'includes/footer.php'; ?>
 
