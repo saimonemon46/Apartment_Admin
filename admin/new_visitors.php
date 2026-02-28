@@ -1,8 +1,19 @@
-<?php include 'includes/header.php'; 
+<?php
+// initial setup before any HTML output
+require_once 'includes/config.php';
+session_start();
+if (!isset($_SESSION['admin_id'])) {
+    header('Location: index.php');
+    exit;
+}
 
 $success = '';
 $errors = array();
 
+// show success message if redirected
+if (isset($_GET['added'])) {
+    $success = 'Visitor added successfully.';
+}
 
 // Load categories from `visitor_categories` table first, then fallback to distinct visitors.category, then to defaults
 $categories = array();
@@ -72,14 +83,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ));
 
         if ($res) {
-            $success = 'Visitor added successfully.';
+            // redirect to avoid form resubmission and clear inputs
+            header('Location: new_visitors.php?added=1');
+            exit;
         } else {
             $errors[] = 'Failed to add visitor to database.';
         }
     }
 }
-?>
 
+// ensure categories populated after POST
+if (empty($categories)) {
+    try {
+        $stmt2 = $dbh->query("SELECT DISTINCT category FROM visitors WHERE category IS NOT NULL AND category <> '' ORDER BY category");
+        $cats2 = $stmt2->fetchAll(PDO::FETCH_COLUMN);
+        if ($cats2) {
+            foreach ($cats2 as $c) {
+                if (strlen(trim($c)) > 0) $categories[] = $c;
+            }
+        }
+    } catch (Exception $e) {
+        // ignore
+    }
+}
+if (empty($categories)) {
+    $categories = array('Maid','Delivery','Guest','Maintenance','Car Cleaner','Cook','Driver','Gardener','Milk Man','Electrician','Newspaper Boy','Other');
+}
+
+?>
+<?php include 'includes/header.php'; ?> 
 <div class="page-content">
     <div class="page-header">
         <h1>
@@ -92,25 +124,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
     <div class="row">
 
-            <?php if (!empty($success)): ?>
-                <div class="col-xs-12">
-                    <div class="alert alert-success">
-                        <?php echo htmlspecialchars($success); ?>
-                    </div>
-                </div>
-            <?php endif; ?>
-
-            <?php if (!empty($errors)): ?>
-                <div class="col-xs-12">
-                    <div class="alert alert-danger">
-                        <ul style="margin:0;padding-left:18px;">
-                            <?php foreach ($errors as $e): ?>
-                                <li><?php echo htmlspecialchars($e); ?></li>
-                            <?php endforeach; ?>
-                        </ul>
-                    </div>
-                </div>
-            <?php endif; ?>
 
             <div class="col-xs-12">
 
@@ -130,11 +143,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     <option value="<?php echo htmlspecialchars($cat); ?>" <?php if (isset($_POST['category']) && $_POST['category'] === $cat) echo 'selected'; ?>><?php echo htmlspecialchars($cat); ?></option>
                                 <?php endforeach; ?>
                                 </select>
+
+                                
                             </div>
                         </div>
                     </div>
 
-                    <!-- Visitor Name -->
+
+
+
+                    <!-- Visitor  Name -->
+
                     <div class="form-group">
                         <label class="col-sm-3 control-label no-padding-right" for="visitor_name">Visitor Name</label>
                         <div class="col-sm-4">
@@ -228,8 +247,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </div>
                     </div>
 
-
-
                     <!-- Date & Time -->
                     <div class="form-group">
                         <label class="col-sm-3 control-label no-padding-right">Date & Time</label>
@@ -251,7 +268,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 Submit
                             </button>
                             &nbsp;&nbsp;&nbsp;
-                            <button class="btn" type="reset">
+                            <button class="btn" type="reset" id="resetBtn">
                                 <i class="ace-icon fa fa-undo bigger-110"></i>
                                 Reset
                             </button>
@@ -265,10 +282,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 </div>
 
+
+
 <?php include 'includes/footer.php'; ?>
 
 
-
+<script src="assets/js/moment.min.js"></script>
+<script src="assets/js/bootstrap-datetimepicker.min.js"></script>
 
 <script>
     $('#visit_datetime').datetimepicker({
@@ -283,25 +303,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Set current local date and time on page load
     $('#visit_datetime').data("DateTimePicker").date(moment());
 
+    // clear inputs when reset clicked
+    document.getElementById('resetBtn').addEventListener('click', function() {
+        const form = this.closest('form');
+        if (!form) return;
+        form.querySelectorAll('input, select, textarea').forEach(el => {
+            if (el.type === 'checkbox' || el.type === 'radio') {
+                el.checked = false;
+            } else if (el.tagName === 'SELECT') {
+                el.selectedIndex = 0;
+            } else {
+                el.value = '';
+            }
+        });
+    });
 
-   
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Enter') {
             const form = e.target.closest('form');
             if (!form) return;
 
-            // prevent form submit
-            e.preventDefault();
+            if (e.target.tagName === 'BUTTON' || e.target.tagName === 'A') {
+                return;
+            }
 
-            // find all inputs
             const inputs = Array.from(form.querySelectorAll('input, select, textarea')).filter(el =>
-                !el.disabled && el.type !== 'hidden'
+                !el.disabled && el.type !== 'hidden' && el.tagName !== 'BUTTON'
             );
 
             const index = inputs.indexOf(e.target);
-            if (index > -1 && index < inputs.length - 1) {
-                inputs[index + 1].focus();
+            if (index === -1) { return; }
+            if (index === inputs.length - 1) {
+                return; // allow submit
             }
+            e.preventDefault();
+            inputs[index + 1].focus();
         }
     });
 </script>
