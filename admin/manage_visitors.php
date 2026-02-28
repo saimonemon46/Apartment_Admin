@@ -4,7 +4,7 @@
 	$visitors = $stmt->fetchAll(PDO::FETCH_ASSOC); 
 
 ?> 
-<div class="main-content">
+<div class="page-content">
 						<div class="page-header">
 							<h1>
 								Manage Visitors
@@ -14,14 +14,11 @@
 								</small>
 							</h1>
 						</div><!-- /.page-header -->
-						<div class="container">
-							<div class="col-xs-12">
-								<!-- PAGE CONTENT BEGINS -->
 								<div class="row">
 									<div class="col-xs-12">
 										<div class="table-header">
 											Results for "Latest Visitors"
-											</div>
+										</div>
 										<table id="simple-table" class="table  table-bordered table-hover">
 											<thead>
 												<tr class="center">
