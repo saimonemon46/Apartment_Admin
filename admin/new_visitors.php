@@ -268,8 +268,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <?php include 'includes/footer.php'; ?>
 
 
-<script src="assets/js/moment.min.js"></script>
-<script src="assets/js/bootstrap-datetimepicker.min.js"></script>
+
 
 <script>
     $('#visit_datetime').datetimepicker({
@@ -283,4 +282,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     // Set current local date and time on page load
     $('#visit_datetime').data("DateTimePicker").date(moment());
+
+
+   
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+            const form = e.target.closest('form');
+            if (!form) return;
+
+            // prevent form submit
+            e.preventDefault();
+
+            // find all inputs
+            const inputs = Array.from(form.querySelectorAll('input, select, textarea')).filter(el =>
+                !el.disabled && el.type !== 'hidden'
+            );
+
+            const index = inputs.indexOf(e.target);
+            if (index > -1 && index < inputs.length - 1) {
+                inputs[index + 1].focus();
+            }
+        }
+    });
 </script>
